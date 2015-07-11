@@ -1,0 +1,8 @@
+﻿<Application
+    x:Class="AppRPI2_temperature_LM35dz.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:AppRPI2_temperature_LM35dz"
+    RequestedTheme="Light">
+
+</Application>
