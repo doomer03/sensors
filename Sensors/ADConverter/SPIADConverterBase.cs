@@ -24,13 +24,13 @@ namespace RPI2.Sensors.ADConverter
                 SpiDisplay.Dispose();
             }
         }
-        public async void initSPI(SPIPort spi)
+        public async void initSPI(SPIPort spi,int clockfrequency, SpiMode mode)
         {
             try
             {
                 var settings = new SpiConnectionSettings((int)spi);
-                settings.ClockFrequency = 500000;
-                settings.Mode = SpiMode.Mode0;
+                settings.ClockFrequency = clockfrequency;
+                settings.Mode = mode;
 
                 string spiAqs = SpiDevice.GetDeviceSelector(Enum.GetName(typeof(SPIPort), spi));
                 var deviceInfo = await DeviceInformation.FindAllAsync(spiAqs);

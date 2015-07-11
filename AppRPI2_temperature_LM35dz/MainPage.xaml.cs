@@ -49,7 +49,7 @@ namespace AppRPI2_temperature_LM35dz
             this.InitializeComponent();
 
             mcp = new MCP3008(new List<int>() { SPI_CHIP_SELECT_LINE });
-            mcp.initSPI(SPIPort.SPI0);
+            mcp.initSPI(SPIPort.SPI0, 500000, SpiMode.Mode0);
 
             this.timer = new DispatcherTimer();
             this.timer.Interval = TimeSpan.FromMilliseconds(500);
