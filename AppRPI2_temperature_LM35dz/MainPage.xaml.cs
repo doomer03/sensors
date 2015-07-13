@@ -24,13 +24,21 @@ namespace AppRPI2_temperature_LM35dz
         private DispatcherTimer timer;
         private MCP3008 mcp = null;
         private LM35dz LM35 = null;
-        int res;
+        float res;
 
         public void DisplayTextBoxContents()
         {
-            res = LM35.Read(SPI_CHIP_SELECT_LINE);
+            res = LM35.ReadmV(SPI_CHIP_SELECT_LINE);
             textPlaceHolder.Text = res.ToString() + " mV\r\n";
-            textPlaceHolder.Text += "T= " + (res /10).ToString() + " °C";
+            textPlaceHolder.Text += "T (celcius)= " + (LM35.ReadCelcius(SPI_CHIP_SELECT_LINE)).ToString() + " °C\r\n";
+            textPlaceHolder.Text += "T (Farenheit)= " + (LM35.ReadFarenheit(SPI_CHIP_SELECT_LINE)).ToString() + " °F\r\n";
+            textPlaceHolder.Text += "T (Kelvin)= " + (LM35.ReadKelvin(SPI_CHIP_SELECT_LINE)).ToString() + " °K\r\n";
+            textPlaceHolder.Text += "T (Rankine)= " + (LM35.ReadRankine(SPI_CHIP_SELECT_LINE)).ToString() + " °Ra\r\n";
+            textPlaceHolder.Text += "T (Réaumur)= " + (LM35.ReadReaumur(SPI_CHIP_SELECT_LINE)).ToString() + " °Ré\r\n";
+            textPlaceHolder.Text += "T (Newton)= " + (LM35.ReadNewton(SPI_CHIP_SELECT_LINE)).ToString() + " °N\r\n";
+            textPlaceHolder.Text += "T (Romer)= " + (LM35.ReadRomer(SPI_CHIP_SELECT_LINE)).ToString() + " °Ro\r\n";
+            textPlaceHolder.Text += "T (Delisle)= " + (LM35.ReadDelisle(SPI_CHIP_SELECT_LINE)).ToString() + " °De\r\n";
+            textPlaceHolder.Text += "T (Leyden)= " + (LM35.ReadLeydenApproximative(SPI_CHIP_SELECT_LINE)).ToString() + " °L";
 
         }
         public MainPage()
