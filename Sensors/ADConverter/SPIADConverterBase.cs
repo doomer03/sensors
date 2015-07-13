@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Devices.Enumeration;
 using Windows.Devices.Spi;
 
 namespace RPI2.Sensors.ADConverter
 {
-    public class SPIADConverterBase : IDisposable
+    public class SPIADConverterBase : IADConverter, IDisposable
     {
         #region properties
         protected SpiDevice SpiDisplay;
         protected List<int> adcChannel = new List<int>();
         protected byte[] readBuffer = new byte[3];
         protected byte[] writeBuffer = new byte[3];
+        protected int maxADCChannel = 0;
         #endregion
 
         public void Dispose()
@@ -24,10 +22,25 @@ namespace RPI2.Sensors.ADConverter
                 SpiDisplay.Dispose();
             }
         }
-        public async void initSPI(SPIPort spi,int clockfrequency, SpiMode mode)
+        private void InitChannel(List<int> adc_channel)
+        {
+            adcChannel = adc_channel;
+            //
+            if (adcChannel.Count <= maxADCChannel && !adcChannel.Exists(x => x > maxADCChannel || x < 0))
+            {
+                //This is the range we are looking for, from CH0 to CHx. 
+            }
+            else
+            {
+                throw new IndexOutOfRangeException("Channel Input is out of range, Channel input should be from 0-" + maxADCChannel.ToString() + " (" + (maxADCChannel+1).ToString()  + "-Channel).");
+            }
+        }
+
+        public async void Init(List<int> adc_channel, SPIPort spi,int clockfrequency, SpiMode mode)
         {
             try
             {
+                InitChannel(adc_channel);
                 var settings = new SpiConnectionSettings((int)spi);
                 settings.ClockFrequency = clockfrequency;
                 settings.Mode = mode;

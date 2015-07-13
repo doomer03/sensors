@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RPI2.Sensors.ADConverter
 {
@@ -12,14 +8,14 @@ namespace RPI2.Sensors.ADConverter
     /// </summary>
     public class MCP3002 : SPIADConverterBase
     {
-        public MCP3002(int adc_channel)
+        protected MCP3002()
         {
-            writeBuffer = new byte[3] { 0x68, 0x00, 0x00 };
+            maxADCChannel = 1;
         }
 
         protected override int readadc(int adc_channel)
         {
-            if ((adc_channel > 7) || adc_channel < 0)
+            if ((adc_channel > maxADCChannel) || adc_channel < 0)
             {
                 return -1;
             }
