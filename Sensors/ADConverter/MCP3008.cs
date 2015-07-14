@@ -18,6 +18,7 @@ namespace RPI2.Sensors.ADConverter
         public MCP3008()
         {
             maxADCChannel = 7;
+            writeBuffer = new byte[3] { 0x06, 0x00, 0x00 };
         }
 
 

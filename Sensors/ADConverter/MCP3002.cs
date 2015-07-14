@@ -11,6 +11,7 @@ namespace RPI2.Sensors.ADConverter
         protected MCP3002()
         {
             maxADCChannel = 1;
+            writeBuffer = new byte[3] { 0x68, 0x00, 0x00 };
         }
 
         protected override int readadc(int adc_channel)
