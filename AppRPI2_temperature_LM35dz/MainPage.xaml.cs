@@ -48,6 +48,8 @@ namespace AppRPI2_temperature_LM35dz
             mcp = new MCP3008(); //new List<int>() { SPI_CHIP_SELECT_LINE });
             mcp.Init(new List<int>() { SPI_CHIP_SELECT_LINE },SPIPort.SPI0, 500000, SpiMode.Mode0);
             LM35 = new LM35dz(mcp);
+            // my sensor is 5°C upper than mercure thermometer, i reduce the result to -5°C 
+            LM35.Precision = -5;
 
             this.timer = new DispatcherTimer();
             this.timer.Interval = TimeSpan.FromMilliseconds(500);

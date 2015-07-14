@@ -4,7 +4,16 @@ namespace RPI2.Sensors.Temperature
 {
     public class LM35dz
     {
+        /// <summary>
+        /// the celcius degree is subdivision of mV value. 250mV = 25°C
+        /// </summary>
+        private const int Factor = 10;
+        /// <summary>
+        /// LM35dz precision sensor, fix this value in Celcius degree to adjust the correct temperature.
+        /// </summary>
+        public int Precision { get; set; }
         private IADConverter _converter;
+     
         public LM35dz(IADConverter value)
         {
             _converter = value;
@@ -12,12 +21,12 @@ namespace RPI2.Sensors.Temperature
         
         public float ReadmV(int channel)
         {
-            return _converter.AnalogToDigital(channel);
+            return _converter.AnalogToDigital(channel) + (Precision * Factor);
         }
 
         public float ReadCelcius(int channel)
         {
-            return ReadmV(channel) / 10;
+            return ReadmV(channel) / Factor;
         }
 
         public float ReadFarenheit(int channel)
@@ -32,27 +41,27 @@ namespace RPI2.Sensors.Temperature
 
         public float ReadKelvin(int channel)
         {
-            return ReadRankine(channel) * (5/9);
+            return ReadRankine(channel) * (5f/9f);
         }
 
         public float ReadReaumur(int channel)
         {
-            return (ReadFarenheit(channel) - 32) * (4 / 9);
+            return (ReadFarenheit(channel) - 32) * (4f / 9f);
         }
 
         public float ReadNewton(int channel)
         {
-            return (ReadFarenheit(channel) - 32) * (11/60);
+            return (ReadFarenheit(channel) - 32) * (11f/60f);
         }
 
         public float ReadRomer(int channel)
         {
-            return ((ReadFarenheit(channel) - 32) * (7 / 24)) + 7.5f;
+            return ((ReadFarenheit(channel) - 32) * (7f / 24f)) + 7.5f;
         }
 
         public float ReadDelisle(int channel)
         {
-            return (212 - ReadFarenheit(channel)) * (5/6);
+            return (212 - ReadFarenheit(channel)) * (5f/6f);
         }
 
         public float ReadLeydenApproximative(int channel)
